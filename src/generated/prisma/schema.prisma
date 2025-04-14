@@ -46,7 +46,7 @@ model MenuCategory {
 
   // Relação com o restaurante
   // ManyToOne
-  restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
   restaurantId String
 
   // Lista de produtos dentro desta categoria
@@ -72,12 +72,12 @@ model Product {
 
   // Relação com o restaurante
   // ManyToOne: Um produto pertence a um único restaurante
-  restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
   restaurantId String
 
   // Relação com a categoria de menu
   // ManyToOne: Um produto pertence a uma única categoria de menu
-  menuCategory   MenuCategory @relation(fields: [menuCategoryId], references: [id])
+  menuCategory   MenuCategory @relation(fields: [menuCategoryId], references: [id], onDelete: Cascade)
   menuCategoryId String
 
   createdAt DateTime @default(now())
@@ -94,7 +94,7 @@ model Order {
 
   // Relação com o restaurante
   // ManyToOne: Um pedido pertence a um único restaurante
-  restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
   restaurantId String
 
   // Lista de produtos dentro do pedido
@@ -111,12 +111,12 @@ model OrderProduct {
 
   // Relação com o produto
   // ManyToOne: Um item do pedido pertence a um único produto
-  product   Product @relation(fields: [productId], references: [id])
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
   productId String
 
   // Relação com o pedido
   // ManyToOne: Um item do pedido pertence a um único pedido
-  order   Order @relation(fields: [orderId], references: [id])
+  order   Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
   orderId Int
 
   // Quantidade do produto dentro do pedido
