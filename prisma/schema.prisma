@@ -16,12 +16,12 @@ datasource db {
 
 // Modelo que representa restaurantes no sistema
 model Restaurant {
-  id String @id @default(uuid())
-  name String
-  slug String
-  description String
+  id             String @id @default(uuid())
+  name           String
+  slug           String
+  description    String
   avatarImageUrl String
-  coverImageUrl String
+  coverImageUrl  String
 
   // Lista de categorias de menu associadas ao restaurante
   // OneToMany: Um restaurante pode ter várias categorias de menu
@@ -41,12 +41,12 @@ model Restaurant {
 
 // Modelo que representa categorias de menu associadas a um restaurante
 model MenuCategory {
-  id String @id @default(uuid())
+  id   String @id @default(uuid())
   name String
-  
+
   // Relação com o restaurante
   // ManyToOne
-  restaurant Restaurant @relation(fields: [restaurantId], references: [id])
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
   restaurantId String
 
   // Lista de produtos dentro desta categoria
@@ -59,11 +59,11 @@ model MenuCategory {
 
 // Modelo que representa um produto no cardápio
 model Product {
-  id String @id @default(uuid())
-  name String
+  id          String   @id @default(uuid())
+  name        String
   description String
-  price Float
-  imageUrl String
+  price       Float
+  imageUrl    String
   ingredients String[]
 
   // Relacionamento com pedidos
@@ -72,12 +72,12 @@ model Product {
 
   // Relação com o restaurante
   // ManyToOne: Um produto pertence a um único restaurante
-  restaurant Restaurant @relation(fields: [restaurantId], references: [id])
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
   restaurantId String
 
   // Relação com a categoria de menu
   // ManyToOne: Um produto pertence a uma única categoria de menu
-  menuCategory MenuCategory @relation(fields: [menuCategoryId], references: [id])
+  menuCategory   MenuCategory @relation(fields: [menuCategoryId], references: [id])
   menuCategoryId String
 
   createdAt DateTime @default(now())
@@ -86,16 +86,15 @@ model Product {
 
 // Modelo que representa um pedido
 model Order {
-
   // ID numérico para facilitar leitura ao invés de UUID
-  id Int @id @default(autoincrement())
-  total Float
-  status OrderStatus
+  id                Int               @id @default(autoincrement())
+  total             Float
+  status            OrderStatus
   consumptionMethod ConsumptionMethod
 
   // Relação com o restaurante
   // ManyToOne: Um pedido pertence a um único restaurante
-  restaurant Restaurant @relation(fields: [restaurantId], references: [id])
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
   restaurantId String
 
   // Lista de produtos dentro do pedido
@@ -108,17 +107,16 @@ model Order {
 
 // Modelo que representa os produtos dentro de um pedido
 model OrderProduct {
-
   id String @id @default(uuid())
 
   // Relação com o produto
   // ManyToOne: Um item do pedido pertence a um único produto
-  product Product @relation(fields: [productId], references: [id])
+  product   Product @relation(fields: [productId], references: [id])
   productId String
 
   // Relação com o pedido
   // ManyToOne: Um item do pedido pertence a um único pedido
-  order Order @relation(fields: [orderId], references: [id])
+  order   Order @relation(fields: [orderId], references: [id])
   orderId Int
 
   // Quantidade do produto dentro do pedido
@@ -133,13 +131,13 @@ model OrderProduct {
 
 // Status possíveis de um pedido
 enum OrderStatus {
-  PENDING           // Pedido foi criado, mas ainda não começou a ser preparado
-  IN_PREPARATION    // Pedido está sendo preparado
-  FINISHED          // Pedido finalizado e pronto para entrega/retirada
+  PENDING // Pedido foi criado, mas ainda não começou a ser preparado
+  IN_PREPARATION // Pedido está sendo preparado
+  FINISHED // Pedido finalizado e pronto para entrega/retirada
 }
 
 // Método de consumo do pedido
 enum ConsumptionMethod {
-  TAKEAWAY    // Pedido para retirada
-  DINE_IN     // Pedido para consumo no local
+  TAKEAWAY // Pedido para retirada
+  DINE_IN // Pedido para consumo no local
 }
